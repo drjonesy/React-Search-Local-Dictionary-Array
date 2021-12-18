@@ -14,29 +14,33 @@ const App = () => {
       if (caseSensitive) {
         return text.startsWith(_term);
       }
-      if (text.toLowerCase().startsWith(_term.toLowerCase())) {
-        return text;
-      }
+      return text.toLowerCase().startsWith(_term.toLowerCase()) ? text : "";
     });
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     const sortedList = dictionary.sort();
-    setResults(reducedList(sortedList, term));
+    if (term.trim() !== "") {
+      setResults(reducedList(sortedList, term));
+    } else {
+      setResults(["Results not found..."]);
+    }
   };
 
-  const renderResults = results.map((result, index) => {
-    return (
-      <div key={index} className="item">
-        {result}
-      </div>
-    );
-  });
+  const renderResults = () => {
+    return results.map((result, index) => {
+      return (
+        <div key={index} className="item">
+          {result}
+        </div>
+      );
+    });
+  };
 
   return (
     <div className="ui container">
-      <div className="ui segment">
+      <div className="ui segment" style={{ marginTop: "20px" }}>
         <form className="ui form" onSubmit={onFormSubmit}>
           <div className="field">
             <label>"Dictionary Search"</label>
@@ -56,7 +60,7 @@ const App = () => {
           </div>
         </form>
       </div>
-      <div className="ui celled list">{renderResults}</div>
+      <div className="ui celled list">{renderResults()}</div>
     </div>
   );
 };

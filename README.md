@@ -1,5 +1,7 @@
 # A Simple Dictionary in React
 
+![](live_example.gif)
+
 ## Initialize
 
 ```shell
