@@ -9,13 +9,22 @@ const App = () => {
     "Welcome. Search for a bit of text.",
   ]);
   // custom functions
+  const textInResults = (arr, _term) => {
+    const _results = arr.filter((text) => {
+      return text.startsWith(_term);
+    });
+    return _results.length !== 0 ? true : false;
+  };
+
   const reducedList = (arr, _term) => {
-    return arr.filter((text) => {
+    const resultList = arr.filter((text) => {
       if (caseSensitive) {
         return text.startsWith(_term);
       }
       return text.toLowerCase().startsWith(_term.toLowerCase()) ? text : "";
     });
+
+    return resultList.length > 0 ? resultList : ["Results not found..."];
   };
 
   const onFormSubmit = (e) => {
@@ -24,7 +33,7 @@ const App = () => {
     if (term.trim() !== "") {
       setResults(reducedList(sortedList, term));
     } else {
-      setResults(["Results not found..."]);
+      setResults(["Empty field. Please type something..."]);
     }
   };
 
